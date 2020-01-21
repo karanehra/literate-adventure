@@ -11,3 +11,6 @@ The layers are as follows:
 5. `Network Layer` : Responsible for
 6. `Datalink Layer` : Used for error free transfer of data frames
 7. `Physical Layer` : Physical medium to transfer data
+
+
+## Physical Layer
