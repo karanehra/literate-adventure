@@ -19,6 +19,15 @@ Components receive `componentWillUnmount` upon teardown. Upon rebuild `component
 
 Old state is lost.
 
-## Root Element Types are Same
+## DOM Element Types are Same
 
-In this case React compares the attributes keeping the underlying element the same. Attributes that are changed are updated. For object attributes like `style` React also does a deep comparision of the two style attributes and updates only the diff
+In this case React compares the attributes keeping the underlying element the same. Attributes that are changed are updated.
+
+For object attributes like `style` React also does a deep comparision of the two style attributes and updates only the diff.
+
+## Component Element Types are Same
+
+This is essentially the equivalent of the component `props` updating. In this case Component instance is preserved to maintain state between renders.
+
+`componentWillReceiveProps` and `componentWillUpdate` are sent to the underlying component as props are updated to match the new component.
+
