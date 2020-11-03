@@ -59,7 +59,7 @@ should be right after baz, before bar
 bar
 ```
 
-## Promises
+## Promises(todo: indepth)
 
 It is necessary that the Call Stack be empty before the event loop can pickup callbacks from the Message Queue. This causes us to never be sure when our Callback will be actually executed. This also caused the Callback Pattern to result in `Callback Hells`.
 
@@ -69,6 +69,8 @@ To solve this promises were born. Described as follows:
 We can define a Promise as an object that can resolve to produce a single value,
 at some time in the future, or the reason why it could not be resolved.
 ```
+
+## 
 
 
 [1]([https://link](https://www.digitalocean.com/community/tutorials/understanding-the-event-loop-callbacks-promises-and-async-await-in-javascript))
