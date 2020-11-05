@@ -30,4 +30,19 @@ So in light of the above we will need to change our nameservers to the appropria
 
 ### What is SSL/TLS
 
-SSL (Secure Sockets Layer) and TLS (Transport Security Layer) are protocols for creating authenticated and encrypted links between machines on the internet. 
+SSL (Secure Sockets Layer) and TLS (Transport Security Layer) are protocols for creating authenticated and encrypted links between machines on the internet. It works by associating the identity of a website to a crypto keypair(private and public keypair). This public key is available via the SSL certificate.
+
+The certificate itself is signed by a **CA (Certificate Authority)** and is then deemed to be trusted by client side softwares like browsers etc.
+
+### HTTPS
+
+A website using the HTTPS protocol owns an SSL/TLS certificate that is signed by a valid CA. This certificate is available in different validation levels. An HTTPS connection ensures the following:
+1. The server providing the site is in possession of the private keys that is paired to the public key in the certificate
+2. The data flowing in from the server/website has not been tampered with by a man in the middle
+3. The to and fro communication is encrypted. No data is sent in plaintext over the network
+
+### Certificate Signing Request (CSR)
+
+A CSR is generated on the server that needs to be secured using various methods depending on the platform. The way i do it is by using `openssl` which works nicely and is readily available on all `*nix` systems.
+
+This CSR can be provided to any CA to buy a certificate.
