@@ -45,4 +45,27 @@ A website using the HTTPS protocol owns an SSL/TLS certificate that is signed by
 
 A CSR is generated on the server that needs to be secured using various methods depending on the platform. The way i do it is by using `openssl` which works nicely and is readily available on all `*nix` systems.
 
-This CSR can be provided to any CA to buy a certificate.
+This CSR can be provided to any CA after you buy a certificate. After providing the CSR one needs to `Authenticate` their identity as the owner of the domain in question. Before that we need to setup our domain to be run by a server. This can be done by various methods and is dependent on the DevOps stack being used but here we consider a simple Linux VM with `nginx` installed and running.
+
+### Setting up A VM
+
+This section has a prerequisite. We need to have a Linux machine accessible via SSH. This VM should have a dedicated IP address and network settings where we can setup DNS Zones and add different record sets.
+
+If the VM has a public IP address it must have a nameserver attached to it. This information is available in the `NS` record set.
+
+Next step is using `apt` to install `nginx` then just do 
+
+```bash
+sudo service nginx start
+```
+
+Now when you visit your public IP from a browser you should see the nginx default homepage
+
+Our VM is now ready. We can further configure `nginx` to act as a reverse proxy for a static frontend or an HTTP Server running on a specific port. But that's unrelated to the following steps.
+
+### Setting up Record Sets
+
+Record Sets are a part of the DNS system and contain useful information regarding websites. Some common record sets are:
+
+1. `A`/`AAAA`: This is a basic record set that's used to point a domain name to an `IPv4` address. `AAAA` is similar just that it uses `IPv6`
+2. `CNAME`: Used to link a subdomain to the domains `A` recordset. For example `example.com` and `www.example.com` can point to the same IP address by using a CNAME record for the `www` subdomain
