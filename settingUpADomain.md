@@ -69,3 +69,6 @@ Record Sets are a part of the DNS system and contain useful information regardin
 
 1. `A`/`AAAA`: This is a basic record set that's used to point a domain name to an `IPv4` address. `AAAA` is similar just that it uses `IPv6`
 2. `CNAME`: Used to link a subdomain to the domains `A` recordset. For example `example.com` and `www.example.com` can point to the same IP address by using a CNAME record for the `www` subdomain
+3. `NS`: NS records are usually set with the registrar, and are used to delegate a domain or subdomain to a set of name servers. Name servers, such as NS1, hold all the other DNS records for your domain and tell all the other computers connected to the internet what records your domain holds. Setting the NS record is therefore a very important part of getting your domains and servers online.
+   
+Our VM holding a public IP will already have a NS record set available. First off we will take these NS records and update them on our Domain Registrar(goDaddy) so that the DNS knows where to look for all related record sets.
