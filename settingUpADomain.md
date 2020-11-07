@@ -71,4 +71,28 @@ Record Sets are a part of the DNS system and contain useful information regardin
 2. `CNAME`: Used to link a subdomain to the domains `A` recordset. For example `example.com` and `www.example.com` can point to the same IP address by using a CNAME record for the `www` subdomain
 3. `NS`: NS records are usually set with the registrar, and are used to delegate a domain or subdomain to a set of name servers. Name servers, such as NS1, hold all the other DNS records for your domain and tell all the other computers connected to the internet what records your domain holds. Setting the NS record is therefore a very important part of getting your domains and servers online.
    
-Our VM holding a public IP will already have a NS record set available. First off we will take these NS records and update them on our Domain Registrar(goDaddy) so that the DNS knows where to look for all related record sets.
+Our VM holding a public IP will already have a NS record set available. First off we will take these NS records and update them on our Domain Registrar(goDaddy) so that the DNS knows where to look for all other related record sets.
+
+With this we setup the `A` record to route the traffic from our domain to the VM's IP address. We can also setup an optional `CNAME` header to reroute other subdomains like `www.` or `info.`
+
+
+After this change we wait for the new DNS records to propagate. Soon after this, visiting our domain should show us the nginx homepage we setup previously. 
+
+### Verifying Identity for the SSL certificate
+
+If we're trying to issue a certificate for our domain the CA needs to be sure that we actually are an admin of the domain so that the CA can then provide us the certificate files we requested for. There are multiple methods for this depending on the CA. Two of the common methods are:
+
+1. Webmaster Email Verification: This requires us to have a webmaster email account connected to the domain in question. If we have access to the domain we bought on our registrar we would also have access to this email ID.
+2. CNAME record Verification: This method is commonly used when we dont have a webmaster email available with our domain(because it requires extra money). The CA provides us the CNAME record info to add to our DNS record sets. Something like DNS Name `RandomHashValue.domain.com` to be redirected to `hash1.hash2.comodoca.net`. Once this record propagates the CA can verify our identity by visiting the provided subdomain and checking on whether it redirects to their provided address.
+   
+Now our identity has been established and we can go on to download our certificate files and setting them up on our server.
+
+### Setting Up the Certificate
+
+This methods is also heavily dependent on our DevOps stack. The CA generally has all documentation available for any kind of server one is using(nginx in our case).
+
+For `nginx` we just download the `.crt` files directly. This generally is a folder containing all the `.crt` files and a `.ca-bundle` file in some cases. All these files need to be combined into a Single Certifcate `.crt` that we will upload to our server.
+
+Now we just SSH into our server. Copy the crt into a private directory or the `/usr/etc/ssl` directory. We setup the nginx config file to point to the `.crt` and the `.pem` key we setup while generating the CSR above. We enable SSL on the default `443` Port.
+
+After setting up we restart `nginx` and Voila. We have our VM connected domain setup with an SSL certificate.
